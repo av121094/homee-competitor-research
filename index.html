@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competitor Marketing Strategy Research · 竞争对手营销策略研究</title>
+<style>
+  :root{
+    --bg:#f4f6f9; --card:#ffffff; --ink:#1c2733; --muted:#5b6b7b;
+    --brand:#1f3864; --accent:#2e75b6; --line:#e2e8f0;
+    --fact:#eef3f8; --good:#0f7b54; --bad:#b4502a;
+    --good-bg:#e8f6ef; --bad-bg:#fbeee7;
+    --shadow:0 1px 3px rgba(16,42,67,.06),0 8px 24px rgba(16,42,67,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC","Hiragino Sans GB",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.7; font-size:16px;
+  }
+  /* language visibility */
+  [data-lang="en"] .zh{display:none}
+  [data-lang="zh"] .en{display:none}
+
+  header.top{
+    position:sticky; top:0; z-index:20;
+    background:linear-gradient(120deg,#1f3864,#2e75b6);
+    color:#fff; padding:18px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    box-shadow:0 2px 12px rgba(16,42,67,.18);
+  }
+  header.top h1{font-size:18px; margin:0; font-weight:700; letter-spacing:.2px}
+  header.top .sub{font-size:12.5px; opacity:.85; font-weight:400; margin-top:2px}
+  .toggle{
+    display:inline-flex; background:rgba(255,255,255,.16);
+    border-radius:999px; padding:3px; flex:0 0 auto; backdrop-filter:blur(4px);
+  }
+  .toggle button{
+    border:0; background:transparent; color:#fff; cursor:pointer;
+    font-size:14px; font-weight:600; padding:7px 16px; border-radius:999px;
+    transition:all .18s ease; font-family:inherit;
+  }
+  .toggle button.active{background:#fff; color:var(--brand)}
+
+  .wrap{max-width:1000px; margin:0 auto; padding:32px 24px 80px}
+  .intro{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:22px 26px; margin-bottom:28px; box-shadow:var(--shadow);
+  }
+  .intro .lead{font-size:20px; font-weight:700; color:var(--brand); margin:0 0 4px}
+  .intro .roster{color:var(--accent); font-weight:600; font-size:14.5px}
+  .intro .meta{color:var(--muted); font-size:13px; font-style:italic; margin:6px 0 14px}
+  .intro p.desc{margin:0; color:var(--ink); font-size:15px}
+
+  section.comp{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:24px 26px; margin-bottom:22px; box-shadow:var(--shadow);
+    scroll-margin-top:90px;
+  }
+  section.comp h2{
+    font-size:22px; color:var(--brand); margin:0 0 14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  section.comp h2 .num{
+    background:var(--brand); color:#fff; font-size:14px; font-weight:700;
+    width:30px; height:30px; border-radius:8px; display:inline-flex;
+    align-items:center; justify-content:center; flex:0 0 auto;
+  }
+  .fact{
+    background:var(--fact); border:1px solid #dbe6f1; border-radius:10px;
+    padding:14px 16px; font-size:13.5px; color:#2c3e50; margin-bottom:18px;
+  }
+  .fact div{margin:2px 0}
+  .fact b{color:var(--brand)}
+  h3.sub{
+    font-size:15px; color:var(--accent); margin:18px 0 6px;
+    text-transform:uppercase; letter-spacing:.4px; font-weight:700;
+  }
+  [data-lang="zh"] h3.sub{text-transform:none; letter-spacing:0}
+  section.comp p{margin:0 0 10px; font-size:15px}
+  .chan{border-radius:10px; padding:12px 14px; margin:8px 0; font-size:14.5px}
+  .chan.good{background:var(--good-bg); border-left:4px solid var(--good)}
+  .chan.bad{background:var(--bad-bg); border-left:4px solid var(--bad)}
+  .chan .tag{font-weight:700; display:block; margin-bottom:3px}
+  .chan.good .tag{color:var(--good)}
+  .chan.bad .tag{color:var(--bad)}
+
+  .tbl-wrap{overflow-x:auto; border-radius:12px; border:1px solid var(--line)}
+  table{border-collapse:collapse; width:100%; min-width:760px; font-size:13px; background:var(--card)}
+  th,td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top}
+  thead th{background:var(--brand); color:#fff; font-weight:700; position:sticky; top:0}
+  tbody td:first-child{background:#f2f5f8; font-weight:700; color:var(--brand)}
+  tbody tr:nth-child(even) td:not(:first-child){background:#fafbfc}
+
+  .implications{
+    background:linear-gradient(120deg,#eef3f8,#ffffff);
+    border:1px solid #dbe6f1; border-radius:14px; padding:24px 26px;
+    margin-top:22px; box-shadow:var(--shadow);
+  }
+  .implications h2{font-size:22px; color:var(--brand); margin:0 0 12px}
+  .implications p{margin:0; font-size:15px}
+  .implications b{color:var(--accent)}
+  footer{text-align:center; color:var(--muted); font-size:12.5px; margin-top:28px}
+  @media(max-width:600px){
+    header.top h1{font-size:15px}
+    .wrap{padding:20px 14px 60px}
+    section.comp,.intro,.implications{padding:18px 16px}
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>
+      <span class="en">Competitor Marketing Strategy Research</span>
+      <span class="zh">竞争对手营销策略研究</span>
+    </h1>
+    <div class="sub">
+      <span class="en">US Mobile Healthcare · Prepared for Homee Team · June 2026</span>
+      <span class="zh">美国移动医疗 · 为 Homee 团队准备 · 2026 年 6 月</span>
+    </div>
+  </div>
+  <div class="toggle" role="group" aria-label="Language">
+    <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="lead">
+      <span class="en">Competitor Marketing Strategy Research</span>
+      <span class="zh">竞争对手营销策略研究</span>
+    </div>
+    <div class="roster">Sprinter Health · Function Health · Getlabs · DispatchHealth · DocGo</div>
+    <div class="meta">
+      <span class="en">Prepared for Homee Team | June 2026</span>
+      <span class="zh">为 Homee 团队准备 | 2026 年 6 月</span>
+    </div>
+    <p class="desc">
+      <span class="en">This report covers, for each competitor: <b>brand positioning, target audience, key go-to-market strategy, and key marketing channels (what works and what doesn't)</b>. Competitor signals are mapped to concrete implications for Homee's go-to-market strategy at the end.</span>
+      <span class="zh">本报告针对每个竞争对手涵盖：<b>品牌定位、目标受众、核心市场进入策略，以及核心营销渠道（哪些有效、哪些无效）</b>。报告末尾将竞争对手的信号映射为对 Homee 市场进入策略的具体启示。</span>
+    </p>
+  </div>
+
+  <!-- 1. Sprinter Health -->
+  <section class="comp" id="c1">
+    <h2><span class="num">1</span>Sprinter Health</h2>
+    <div class="fact">
+      <div class="en">Founded 2021 | Menlo Park, CA | Funding: $125M+ | ~500–1,000 employees | Revenue est. $73.4M</div>
+      <div class="zh">成立于 2021 年 | 加州门洛帕克 | 融资：1.25 亿美元以上 | 约 500–1,000 名员工 | 预计营收 7,340 万美元</div>
+      <div class="en"><b>Positioning:</b> AI-powered in-home clinical data collection infrastructure for population health management</div>
+      <div class="zh"><b>定位：</b>面向人群健康管理的 AI 驱动型上门临床数据采集基础设施</div>
+      <div class="en">Investors: a16z, General Catalyst, GV, Accel | 2M+ patients across 22 states</div>
+      <div class="zh">投资方：a16z、General Catalyst、GV、Accel | 已服务超 200 万名患者，覆盖 22 个州</div>
+    </div>
+    <h3 class="sub"><span class="en">Brand Positioning</span><span class="zh">品牌定位</span></h3>
+    <p><span class="en">Sprinter Health positions itself as the in-home clinical data collection infrastructure for population health management — "closing care gaps at home." The brand is technology-first, founded by ex-Google/Facebook engineers, and emphasizes its proprietary AI dispatch algorithm as the core moat. Messaging avoids consumer price/convenience framing in favor of enterprise population health language, and the W-2 employment model is marketed as a quality and trust signal versus gig-worker competitors. Outcome metrics (92 NPS, 2M+ patients, 22 states, reduced ER visits, improved Medicare Stars ratings) sit at the center of every claim.</span><span class="zh">Sprinter Health 将自身定位为面向人群健康管理的上门临床数据采集"基础设施"——主打"在家中弥合医疗缺口"。品牌强调技术优先，由前 Google / Facebook 工程师创立，将其自研的 AI 调度算法作为核心护城河。其信息传递刻意避开面向消费者的价格 / 便利性叙事，转而采用企业级人群健康管理语言；同时把 W-2 正式雇佣模式作为相对零工竞争者的质量与信任信号加以宣传。各类成果指标（92 分 NPS、200 万以上患者、22 个州、降低急诊就诊率、提升 Medicare 星级评分）是其所有营销主张的核心。</span></p>
+    <h3 class="sub"><span class="en">Target Audience</span><span class="zh">目标受众</span></h3>
+    <p><span class="en">Almost exclusively B2B: health plans, providers, and large health systems, reached through consultative sales cycles with essentially no consumer-facing advertising. The economic pitch is built around proving ROI for insurers via Stars/HEDIS score improvements and risk-adjustment revenue.</span><span class="zh">几乎完全面向 B2B：医疗保险计划、医疗服务提供方和大型医疗系统。通过顾问式销售周期触达买方，基本没有面向消费者的广告。其经济价值主张围绕通过提升星级 / HEDIS 评分和风险调整收入，为保险公司证明投资回报率（ROI）。</span></p>
+    <h3 class="sub"><span class="en">Key Go-to-Market Strategy</span><span class="zh">核心市场进入（GTM）策略</span></h3>
+    <p><span class="en">Sprinter runs an enterprise, partnership-led GTM. Deep integrations with health plans act as enterprise distribution — plans market Sprinter to their enrolled populations at zero acquisition cost. ACO and risk-bearing provider partnerships generate high-density batch referrals. Funding milestones (Series B, $55M, June 2025) are used in PR to signal confidence and trigger inbound enterprise interest. The motion is category-creating, blending present-day proof points with aspirational framing about the future of hybrid care.</span><span class="zh">Sprinter 采用以企业、合作伙伴为主导的 GTM 策略。与医疗保险计划的深度集成充当企业级分销渠道——保险计划以零获客成本向其参保人群推广 Sprinter。与 ACO 及承担风险的医疗服务方的合作带来高密度的批量预约转介。融资里程碑（2025 年 6 月 5,500 万美元 B 轮）被用于公关，以传递市场信心并触发企业端的主动咨询。整体打法属于品类开创型，将当下的成效证据与关于混合护理未来愿景的远景叙事相融合。</span></p>
+    <h3 class="sub"><span class="en">Key Marketing Channels</span><span class="zh">核心营销渠道</span></h3>
+    <div class="chan good"><span class="tag"><span class="en">What works</span><span class="zh">有效的渠道</span></span><span class="en">Thought leadership content (whitepapers, trade-press bylines); speaking slots at payer/health-system conferences (AHIP, ViVE, HLTH); a PR strategy built on media, analyst, and trade relationships; sales enablement assets (case studies, outcome reports); and LinkedIn as the primary B2B social channel. Strategic partnerships double as a distribution and credibility channel.</span><span class="zh">思想领导力内容（白皮书、行业媒体署名文章）；在支付方 / 医疗系统大会（AHIP、ViVE、HLTH）上的演讲席位；建立在与媒体、分析师和行业出版物关系之上的公关策略；销售赋能素材（案例研究、成果报告）；以及作为主要 B2B 社交渠道的 LinkedIn。战略合作同时充当分销与公信力渠道。</span></div>
+    <div class="chan bad"><span class="tag"><span class="en">What doesn't work / not used</span><span class="zh">无效 / 未采用的渠道</span></span><span class="en">No consumer advertising, no paid media, and no demand-gen engine — these levers are absent because the enterprise sales motion doesn't depend on them. Consumer social platforms are largely unused.</span><span class="zh">没有面向消费者的广告、没有付费媒体、也没有需求生成引擎——因为企业销售打法并不依赖这些手段，所以这些杠杆均缺位。面向消费者的社交平台基本未被使用。</span></div>
+  </section>
+
+  <!-- 2. Function Health -->
+  <section class="comp" id="c2">
+    <h2><span class="num">2</span>Function Health</h2>
+    <div class="fact">
+      <div class="en">Founded 2021 | Austin, TX | Funding: $298M Series B (Nov 2025) | Valuation: $2.5B</div>
+      <div class="zh">成立于 2021 年 | 得州奥斯汀 | 融资：2.98 亿美元 B 轮（2025 年 11 月） | 估值：25 亿美元</div>
+      <div class="en"><b>Positioning:</b> "The AI operating system for health — empowering people to live 100 healthy years"</div>
+      <div class="zh"><b>定位：</b>"健康的 AI 操作系统——助人们健康地活到 100 岁"</div>
+      <div class="en">Revenue: ~$100M ARR | Investors: a16z, Redpoint | Acquired Getlabs (Apr 2026) + Ezra (May 2025)</div>
+      <div class="zh">营收：约 1 亿美元 ARR | 投资方：a16z、Redpoint | 收购 Getlabs（2026 年 4 月）+ Ezra（2025 年 5 月）</div>
+    </div>
+    <h3 class="sub"><span class="en">Brand Positioning</span><span class="zh">品牌定位</span></h3>
+    <p><span class="en">Function Health is a DTC longevity brand positioned as "the AI operating system for health" enabling people to "live 100 healthy years." It bypasses the insurance system entirely, running consumer-brand-style marketing rather than clinical enterprise sales. The brand leans heavily on the personal authority of co-founder Dr. Mark Hyman and on cultural relevance (AI integrations, food partnerships, innovation awards) to signal it sits at the intersection of health and technology.</span><span class="zh">Function Health 是一家 DTC 长寿品牌，定位为"健康的 AI 操作系统"，帮助人们"健康地活到 100 岁"。它完全绕开医疗保险体系，采用消费品牌式营销而非临床企业销售周期。品牌高度依赖联合创始人 Mark Hyman 博士的个人权威，以及文化层面的话题度（AI 集成、餐饮合作、创新奖项），以彰显其处于健康与科技交汇点的形象。</span></p>
+    <h3 class="sub"><span class="en">Target Audience</span><span class="zh">目标受众</span></h3>
+    <p><span class="en">Primarily health-conscious, high-net-worth consumers paying an annual membership ($399–$499/year) with high-margin upsells (full-body MRI at $499, advanced panels). A second, emerging audience is mid-market employers — Function is now positioning itself as a corporate wellness / employee health benefit, layering a B2B motion on top of DTC.</span><span class="zh">主要面向注重健康、高净值的消费者，他们支付年度会员费（399–499 美元/年）并购买高毛利增值项目（499 美元的全身 MRI、进阶检测套餐）。第二类新兴受众是中型市场雇主——Function 正将自身定位为企业健康福利 / 员工健康项目，在 DTC 之上叠加 B2B 打法。</span></p>
+    <h3 class="sub"><span class="en">Key Go-to-Market Strategy</span><span class="zh">核心市场进入（GTM）策略</span></h3>
+    <p><span class="en">The core engine is founder/influencer-led growth. Dr. Mark Hyman (TIME100 Health honoree, bestselling author, podcaster) is the single most powerful asset, with millions of followers. "Hyman Digital" produces a high-volume content engine — newsletters, podcasts, social posts, videos — that funnels followers directly into membership, creating a flywheel where audience trust transfers to the product. The 2023 launch used waitlist/scarcity marketing for perceived exclusivity. On top of this, Function is building an outbound B2B enterprise sales motion targeting employers.</span><span class="zh">核心增长引擎是创始人 / 影响者主导的增长。Mark Hyman 博士（《时代》百大健康人物、畅销书作者、播客主）是其最强大的单一资产，拥有数百万粉丝。"Hyman Digital"产出高产量的内容引擎——新闻通讯、播客、社交贴文、视频——将粉丝直接导流为会员，形成受众信任直接转移到产品的飞轮。2023 年发布时采用候补名单 / 稀缺营销以营造专属感。在此之上，Function 正在搭建面向雇主的对外 B2B 企业销售打法。</span></p>
+    <h3 class="sub"><span class="en">Key Marketing Channels</span><span class="zh">核心营销渠道</span></h3>
+    <div class="chan good"><span class="tag"><span class="en">What works</span><span class="zh">有效的渠道</span></span><span class="en">Founder IP plus organic social is the primary acquisition channel — short-form video (Reels, TikTok) for testimonials and biomarker explainers, with a distinct role for each platform (Instagram, TikTok, X, LinkedIn, Reddit, YouTube, Threads, Facebook). Reddit/community forums drive organic community building. Brand partnerships generate earned media: the Sweetgreen co-branded menu, the ChatGPT app integration (Jan 2026), Microsoft Copilot Health + Perplexity Health. A sophisticated lifecycle/CRM stack (Iterable) nurtures members via email and SMS.</span><span class="zh">创始人 IP 加自然流量社交是主要获客渠道——短视频（Reels、TikTok）用于会员见证和生物标志物科普，并为每个平台分配差异化角色（Instagram、TikTok、X、LinkedIn、Reddit、YouTube、Threads、Facebook）。Reddit / 社区论坛推动社群的自然建设。品牌合作赢得媒体报道：Sweetgreen 联名菜单、ChatGPT 应用集成（2026 年 1 月）、Microsoft Copilot Health + Perplexity Health。成熟的生命周期 / CRM 技术栈（Iterable）通过邮件和短信培育会员。</span></div>
+    <div class="chan bad"><span class="tag"><span class="en">What doesn't work / not used</span><span class="zh">无效 / 未采用的渠道</span></span><span class="en">Function runs essentially no paid acquisition or demand-gen — growth is founder-IP and organic-social dependent, concentrating risk on a single personality and on continued cultural relevance. The B2B employer motion is still nascent and unproven relative to the DTC flywheel.</span><span class="zh">Function 基本不做付费获客或需求生成——增长依赖创始人 IP 和自然社交流量，这使风险集中在单一个人形象以及持续的文化话题度上。面向雇主的 B2B 打法相对 DTC 飞轮仍处于早期且尚未验证。</span></div>
+  </section>
+
+  <!-- 3. Getlabs -->
+  <section class="comp" id="c3">
+    <h2><span class="num">3</span>Getlabs</h2>
+    <div class="fact">
+      <div class="en">Founded 2018 (launched 2021) | Miami, FL | Funding: ~$41.7M over 3 rounds | ~120–330 employees</div>
+      <div class="zh">成立于 2018 年（2021 年上线） | 佛州迈阿密 | 融资：约 4,170 万美元，分 3 轮 | 约 120–330 名员工</div>
+      <div class="en"><b>Positioning:</b> "The leading platform for at-home diagnostics — making diagnostics as accessible as your front door"</div>
+      <div class="zh"><b>定位：</b>"领先的上门诊断平台——让诊断像走到家门口一样触手可及"</div>
+      <div class="en">Founder/CEO: Kyle Michelson | ~64% of US population, 45+ markets | Investors: Pivot North, Emerson Collective, Labcorp | Acquired by Function Health (Apr 2026)</div>
+      <div class="zh">创始人 / CEO：Kyle Michelson | 约 64% 美国人口，45+ 市场 | 投资方：Pivot North、Emerson Collective、Labcorp | 被 Function Health 收购（2026 年 4 月）</div>
+    </div>
+    <h3 class="sub"><span class="en">Brand Positioning</span><span class="zh">品牌定位</span></h3>
+    <p><span class="en">Getlabs positions itself as the leading independent platform/infrastructure for at-home diagnostics — sending mobile phlebotomists to collect labs, vitals, and advanced diagnostics at the patient's home or workplace. The mission framing is access-driven: making diagnostics "as accessible as a patient's front door." Unlike Function Health (now its parent), Getlabs' brand is utility and access, not longevity lifestyle. Its acquisition by Function Health (April 2026) repositions it as the in-home collection layer beneath a consumer longevity brand.</span><span class="zh">Getlabs 将自身定位为领先的独立上门诊断"平台 / 基础设施"——派遣移动采血师到患者家中或工作场所采集化验样本、生命体征和进阶诊断项目。其使命叙事以"可及性"为核心：让诊断"像走到家门口一样触手可及"。与 Function Health（如今的母公司）不同，Getlabs 的品牌强调实用与可及，而非长寿生活方式。被 Function Health 收购（2026 年 4 月）后，它被重新定位为消费型长寿品牌之下的上门采集层。</span></p>
+    <h3 class="sub"><span class="en">Target Audience</span><span class="zh">目标受众</span></h3>
+    <p><span class="en">Dual audience. Consumer side: people who want at-home collection but are uncomfortable drawing their own blood or need tests beyond at-home kits — busy professionals and parents, people without easy transportation, and those with disabilities, chronic conditions, or who are immunocompromised. Organizational side: health systems, health plans, and digital-health/DTC lab platforms that dispatch Getlabs phlebotomists to close gaps in care, boost member satisfaction, and improve outcomes.</span><span class="zh">双重受众。消费者端：希望上门采集、但不愿自行采血或需要超出居家检测套件范围检测的人群——忙碌的职场人士和父母、出行不便者，以及残障、慢性病或免疫功能低下的人群。机构端：医疗系统、医疗保险计划，以及数字健康 / DTC 化验平台，它们调度 Getlabs 采血师上门，以弥合医疗缺口、提升会员满意度并改善健康结局。</span></p>
+    <h3 class="sub"><span class="en">Key Go-to-Market Strategy</span><span class="zh">核心市场进入（GTM）策略</span></h3>
+    <p><span class="en">Getlabs runs a partnership / platform-distribution GTM rather than a consumer-advertising one. It built deep integrations with major lab networks and digital-health players that route specimen-collection orders directly to its certified phlebotomist network — most notably Labcorp ("Getlabs for Labcorp," with Labcorp an investor since 2022) and Quest Diagnostics. Partners act as distribution: their patients book Getlabs collection for the partner's full test menu. The model is asset-based (W-2 phlebotomists collecting blood, saliva, stool, urine, breath) with a convenience fee from ~$25. Multi-channel partner acquisition combines inbound with targeted outbound to health systems and plans, from large enterprises down to SMBs and solo practices.</span><span class="zh">Getlabs 采用以合作伙伴 / 平台分销为主、而非消费者广告为主的 GTM。它与主要化验网络和数字健康企业建立深度集成，将样本采集订单直接路由到其认证采血师网络——其中最突出的是 Labcorp（"Getlabs for Labcorp"，Labcorp 自 2022 年起即为投资方）和 Quest Diagnostics。合作伙伴充当分销渠道：其患者预约 Getlabs 上门采集，以完成合作方的全部检测项目。其模式为重资产型（W-2 采血师采集血液、唾液、粪便、尿液、呼气样本），便利费起步约 25 美元。多渠道合作伙伴拓展将主动咨询与面向医疗系统和保险计划的精准外联相结合，从大型企业一路渗透到中小企业和个体诊所。</span></p>
+    <h3 class="sub"><span class="en">Key Marketing Channels</span><span class="zh">核心营销渠道</span></h3>
+    <div class="chan good"><span class="tag"><span class="en">What works</span><span class="zh">有效的渠道</span></span><span class="en">Co-marketing and platform integrations with lab giants (Labcorp, Quest) are the dominant volume driver — partners surface Getlabs to their patient base at near-zero acquisition cost, and partner credibility transfers to Getlabs. Outbound B2B campaigns to health systems and plans, plus inbound from its consumer booking site, round out acquisition. Funding/partnership announcements (and the Function acquisition) generate trade-press and earned media.</span><span class="zh">与化验巨头（Labcorp、Quest）的联合营销与平台集成是最主要的业务量驱动——合作伙伴以接近零的获客成本向其患者群体推介 Getlabs，合作方的公信力也随之转移给 Getlabs。面向医疗系统和保险计划的对外 B2B 活动，加上来自面向消费者预约网站的主动流量，共同构成获客。融资 / 合作公告（以及被 Function 收购）带来行业媒体报道与赢得媒体曝光。</span></div>
+    <div class="chan bad"><span class="tag"><span class="en">What doesn't work / not used</span><span class="zh">无效 / 未采用的渠道</span></span><span class="en">Little to no large-scale consumer brand advertising — consumer demand is mostly mediated by lab and digital-health partners rather than generated directly. The brand has limited standalone consumer recognition, part of the strategic rationale for sitting beneath Function Health's consumer brand.</span><span class="zh">几乎没有大规模面向消费者的品牌广告——消费需求大多由化验和数字健康合作伙伴中介产生，而非直接生成。品牌独立的消费者认知度有限，这也是其选择置于 Function Health 消费品牌之下的部分战略原因。</span></div>
+  </section>
+
+  <!-- 4. DispatchHealth -->
+  <section class="comp" id="c4">
+    <h2><span class="num">4</span>DispatchHealth</h2>
+    <div class="fact">
+      <div class="en">Founded 2013 | Denver, CO | Funding: $1B+ | Valuation: $1.7B | Unicorn</div>
+      <div class="zh">成立于 2013 年 | 科罗拉多州丹佛 | 融资：10 亿美元以上 | 估值：17 亿美元 | 独角兽</div>
+      <div class="en"><b>Positioning:</b> "Bringing the power of the hospital to the comfort of home"</div>
+      <div class="zh"><b>定位：</b>"把医院的能力带到家中的舒适里"</div>
+      <div class="en">Stats: 1.2M+ patients, 20+ states, 58% ER avoidance, 98% satisfaction, $1.5B est. cost savings | CMO: Andrea Pearson (ex-Healthgrades)</div>
+      <div class="zh">数据：120 万以上患者、20+ 州、58% 急诊回避率、98% 满意度、约 15 亿美元预计成本节约 | CMO：Andrea Pearson（前 Healthgrades）</div>
+    </div>
+    <h3 class="sub"><span class="en">Brand Positioning</span><span class="zh">品牌定位</span></h3>
+    <p><span class="en">DispatchHealth has the most mature brand architecture of the set, publishing a formal, public brand guide — unusual among healthcare startups. Tagline: "Your Vision, Our Engine — Powering Scale in Complex Care at Home." It positions as "the nation's most trusted healthcare system in the home." Critically, the brand prohibits "hospital at home," "ER at home," and "mobile urgent care" due to regulatory risk, using "ER-alternative," "hospital-alternative," and "SNF-alternative" instead ("urgent care" allowed only in paid search, because that's how consumers search).</span><span class="zh">DispatchHealth 在这组竞争者中拥有最成熟的品牌架构，公开发布了一份正式的品牌指南——这在医疗初创公司中并不常见。标语："Your Vision, Our Engine——为家中复杂护理的规模化赋能"。它定位为"全美最受信赖的家庭医疗系统"。关键的是，品牌出于合规风险禁止使用"hospital at home""ER at home"和"mobile urgent care"等措辞，改用"急诊替代""住院替代"和"专业护理机构（SNF）替代"（仅在付费搜索广告中允许使用"urgent care"，因为消费者就是这样搜索的）。</span></p>
+    <h3 class="sub"><span class="en">Target Audience</span><span class="zh">目标受众</span></h3>
+    <p><span class="en">A deliberate dual-track audience. B2B (primary revenue): health systems, insurers, EMS, senior living, and risk-bearing providers, sold on cost-avoidance metrics (58% ER avoidance, 8.5% 30-day readmission, $1.5B savings). B2C (secondary, insurance-mediated): patients who book online or via referral, with messaging on same-day convenience and cost. Most patients arrive through insurance partner referrals rather than direct advertising.</span><span class="zh">刻意设计的双轨受众。B2B（主要收入来源）：医疗系统、保险公司、急救医疗（EMS）、养老机构以及承担风险的医疗服务方，以成本回避指标进行销售（58% 急诊回避率、8.5% 的 30 天再入院率、约 15 亿美元节约）。B2C（次要，经保险中介）：通过线上或转介预约的患者，信息聚焦于当日便利与费用。多数患者通过保险合作伙伴转介而来，而非直接广告。</span></p>
+    <h3 class="sub"><span class="en">Key Go-to-Market Strategy</span><span class="zh">核心市场进入（GTM）策略</span></h3>
+    <p><span class="en">Co-marketing as a force multiplier. DispatchHealth runs a formal co-marketing program in which partners (hospitals, health plans) receive approved brand assets and co-branded collateral; insurers then market DispatchHealth to their enrolled populations at zero acquisition cost — the primary volume driver. The "exchange of credibility" framing means each co-branded asset signals endorsement from both parties. DispatchExpress is a branded partner referral product that operationalizes this motion.</span><span class="zh">以联合营销作为放大器。DispatchHealth 运营一套正式的联合营销项目，合作伙伴（医院、保险计划）可获得经审批的品牌素材和联名物料；保险公司随后以零获客成本向其参保人群推广 DispatchHealth——这是最主要的业务量驱动。"公信力互换"的框架意味着每一份联名素材都同时传递双方背书。DispatchExpress 是将这一打法产品化的品牌化合作转介产品。</span></p>
+    <h3 class="sub"><span class="en">Key Marketing Channels</span><span class="zh">核心营销渠道</span></h3>
+    <div class="chan good"><span class="tag"><span class="en">What works</span><span class="zh">有效的渠道</span></span><span class="en">Insurance/partner co-marketing (the main engine), a disciplined public brand system that keeps messaging consistent and regulatorily safe at scale, proof-point-driven content (patient success stories and quantified outcomes), and an active PR/newsroom pursuing coverage for funding, expansion, and clinical outcomes. Paid search is used selectively where consumer intent exists (e.g., "urgent care").</span><span class="zh">保险 / 合作伙伴联合营销（核心引擎）；一套有纪律的公开品牌体系，使信息在规模化时保持一致且合规安全；以佐证数据为驱动的内容（患者成功故事和量化成果）；以及围绕融资、扩张和临床成果积极争取报道的公关 / 新闻编辑室。在存在消费者意图之处（如"urgent care"）会有选择地使用付费搜索。</span></div>
+    <div class="chan bad"><span class="tag"><span class="en">What doesn't work / not used</span><span class="zh">无效 / 未采用的渠道</span></span><span class="en">Minimal direct-to-consumer advertising — DispatchHealth deliberately does not generate consumer demand independent of insurers, since volume is most efficiently sourced through partners. Heavy reliance on payer partners means consumer brand awareness is comparatively limited relative to brand maturity.</span><span class="zh">极少做直接面向消费者的广告——DispatchHealth 刻意不去脱离保险方独立生成消费需求，因为通过合作伙伴获取业务量最为高效。对支付方合作伙伴的高度依赖，意味着相对其品牌成熟度而言，消费者品牌认知度偏低。</span></div>
+  </section>
+
+  <!-- 5. DocGo -->
+  <section class="comp" id="c5">
+    <h2><span class="num">5</span>DocGo <span style="font-size:14px;color:var(--muted);font-weight:500;margin-left:4px">(Nasdaq: DCGO)</span></h2>
+    <div class="fact">
+      <div class="en">Founded 2016 (as Ambulnz) | New York, NY | Public: Nasdaq DCGO</div>
+      <div class="zh">成立于 2016 年（前身 Ambulnz） | 纽约市 | 上市：纳斯达克 DCGO</div>
+      <div class="en"><b>Positioning:</b> "Last-mile healthcare infrastructure — Healthcare at any address"</div>
+      <div class="zh"><b>定位：</b>"最后一公里医疗基础设施——任何地址皆可就医"</div>
+      <div class="en">Revenue: $75.6M Q1 2026 | FY guidance: $300M–$315M | Net loss Q1 2026: -$16.7M | Does NOT pay for customer acquisition</div>
+      <div class="zh">营收：2026 Q1 7,560 万美元 | 全年指引：3.00 亿–3.15 亿美元 | Q1 净亏损：-1,670 万美元 | 明确不为获客付费</div>
+    </div>
+    <h3 class="sub"><span class="en">Brand Positioning</span><span class="zh">品牌定位</span></h3>
+    <p><span class="en">DocGo positions as "last-mile healthcare infrastructure — healthcare at any address." As a public company in cost-control mode, its narrative is actively pivoting from "government partner" (its pandemic-era identity) to "proactive mobile health platform." Brand perception management is part of the job: controversy around the NYC migrant healthcare contract requires active reputation work.</span><span class="zh">DocGo 定位为"最后一公里医疗基础设施——任何地址皆可就医"。作为一家处于成本控制模式的上市公司，其叙事正在从"政府合作方"（其疫情时期的身份）主动转向"主动型移动健康平台"。品牌认知管理是其工作的一部分：围绕纽约市移民医疗合同的争议需要持续的声誉管理。</span></p>
+    <h3 class="sub"><span class="en">Target Audience</span><span class="zh">目标受众</span></h3>
+    <p><span class="en">B2G and B2B buyers: government agencies (NYC contracts, VA and state programs), hospital systems, and payers. Procurement officers and CFOs are the real audience, evaluating operational reliability (large fleet, W-2 clinical staff, multi-state operation) and cost-avoidance. There is no consumer audience.</span><span class="zh">B2G 与 B2B 买方：政府机构（纽约市合同、退伍军人事务部及州级项目）、医院系统和支付方。真正的受众是采购官员和 CFO，他们评估运营可靠性（庞大车队、W-2 临床人员、多州运营）与成本回避。不存在消费者受众。</span></p>
+    <h3 class="sub"><span class="en">Key Go-to-Market Strategy</span><span class="zh">核心市场进入（GTM）策略</span></h3>
+    <p><span class="en">DocGo has publicly stated it does not pay for customer acquisition. Growth comes from partnering with organizations that already have patients in need — so the GTM is strategic partnerships, government contract procurement, and investor relations rather than advertising. Acquisitions act as market signals (e.g., PTI Health in 2024 to enter mobile phlebotomy, doubling as a product-launch announcement). Profitability pressure (-$16.7M net loss in Q1 2026) makes large-scale demand-gen impossible by design.</span><span class="zh">DocGo 已公开表示不为获客付费。增长来自与那些已经拥有需求患者的组织建立合作——因此其 GTM 是战略合作、政府合同采购和投资者关系，而非广告活动。收购充当市场信号（例如 2024 年收购 PTI Health 以进入移动采血领域，同时充当产品发布公告）。盈利压力（2026 Q1 净亏损 -1,670 万美元）使大规模需求生成在设计上即不可行。</span></p>
+    <h3 class="sub"><span class="en">Key Marketing Channels</span><span class="zh">核心营销渠道</span></h3>
+    <div class="chan good"><span class="tag"><span class="en">What works</span><span class="zh">有效的渠道</span></span><span class="en">Investor relations and earnings communications (quarterly releases, investor-day presentations, new-contract press releases) serve a dual purpose — maintaining investor confidence while signaling capability to prospective B2B clients. Government RFP wins (NYC migrant health screening, COVID programs) function as proof-of-scale marketing to other municipal buyers. Hospital partnership announcements signal capability to procurement. Proof points (700,000+ enrolled, NPS 86) anchor payer pitches.</span><span class="zh">投资者关系与财报沟通（季度发布、投资者日演示、新合同新闻稿）具有双重作用——既维护投资者信心，又向潜在 B2B 客户传递能力信号。政府 RFP 中标（纽约市移民健康筛查、新冠项目）充当向其他市政买方展示规模佐证的营销。医院合作公告向采购方传递能力信号。佐证数据（登记 70 万人以上、NPS 86 分）支撑面向支付方的提案。</span></div>
+    <div class="chan bad"><span class="tag"><span class="en">What doesn't work / not used</span><span class="zh">无效 / 未采用的渠道</span></span><span class="en">No consumer advertising and no traditional growth/brand/content marketing team — go-to-market is effectively a sales/BD function. The declining post-pandemic revenue base and reputational risk mean marketing is constrained to communications and reputation management rather than demand generation.</span><span class="zh">没有面向消费者的广告，也没有传统的增长 / 品牌 / 内容营销团队——市场进入实质上是一个销售 / BD 职能。疫情后营收基础下滑与声誉风险，意味着营销被限制在沟通与声誉管理，而非需求生成。</span></div>
+  </section>
+
+  <!-- 6. Summary table -->
+  <section class="comp" id="c6">
+    <h2><span class="num">6</span><span class="en">Summary Comparison</span><span class="zh">汇总对比表</span></h2>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="en">Dimension</span><span class="zh">维度</span></th>
+            <th>Sprinter Health</th><th>Function Health</th><th>Getlabs</th><th>DispatchHealth</th><th>DocGo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="en">Primary market</span><span class="zh">主要市场</span></td>
+            <td><span class="en">B2B (payers, health systems)</span><span class="zh">B2B（支付方、医疗系统）</span></td>
+            <td><span class="en">B2C (high-income) + B2B employers</span><span class="zh">B2C（高收入）+ B2B 雇主</span></td>
+            <td><span class="en">B2B partners (labs, systems) + B2C via partners</span><span class="zh">B2B 合作伙伴（化验、系统）+ 经合作方的 B2C</span></td>
+            <td><span class="en">B2B (payers, hospitals) + B2C via insurance</span><span class="zh">B2B（支付方、医院）+ 经保险的 B2C</span></td>
+            <td><span class="en">B2G + B2B (hospitals, VA)</span><span class="zh">B2G + B2B（医院、退伍军人事务部）</span></td>
+          </tr>
+          <tr>
+            <td><span class="en">Core message</span><span class="zh">核心信息</span></td>
+            <td><span class="en">In-home care-gap closure infrastructure</span><span class="zh">上门医疗缺口弥合基础设施</span></td>
+            <td><span class="en">AI health OS for 100 healthy years</span><span class="zh">助人活到 100 岁的 AI 健康 OS</span></td>
+            <td><span class="en">At-home diagnostics, accessible as your front door</span><span class="zh">上门诊断，像走到家门口一样可及</span></td>
+            <td><span class="en">Hospital power, home comfort</span><span class="zh">医院能力，家中舒适</span></td>
+            <td><span class="en">Healthcare at any address</span><span class="zh">任何地址皆可就医</span></td>
+          </tr>
+          <tr>
+            <td><span class="en">Brand positioning</span><span class="zh">品牌定位</span></td>
+            <td><span class="en">Enterprise population-health infrastructure</span><span class="zh">企业级人群健康基础设施</span></td>
+            <td><span class="en">DTC longevity lifestyle brand</span><span class="zh">DTC 长寿生活方式品牌</span></td>
+            <td><span class="en">Independent at-home diagnostics platform</span><span class="zh">独立的上门诊断平台</span></td>
+            <td><span class="en">Trusted in-home health system (mature brand guide)</span><span class="zh">受信赖的家庭医疗系统（成熟品牌指南）</span></td>
+            <td><span class="en">Last-mile health infrastructure (repositioning)</span><span class="zh">最后一公里健康基础设施（重新定位中）</span></td>
+          </tr>
+          <tr>
+            <td><span class="en">Top channel</span><span class="zh">首要渠道</span></td>
+            <td><span class="en">Thought leadership + sales enablement</span><span class="zh">思想领导力 + 销售赋能</span></td>
+            <td><span class="en">Founder IP + organic social</span><span class="zh">创始人 IP + 自然社交</span></td>
+            <td><span class="en">Lab co-marketing + outbound B2B</span><span class="zh">化验联合营销 + 对外 B2B</span></td>
+            <td><span class="en">Insurance co-marketing + PR</span><span class="zh">保险联合营销 + 公关</span></td>
+            <td><span class="en">Govt contracts + investor relations</span><span class="zh">政府合同 + 投资者关系</span></td>
+          </tr>
+          <tr>
+            <td><span class="en">Consumer advertising?</span><span class="zh">是否做消费者广告？</span></td>
+            <td><span class="en">None</span><span class="zh">无</span></td>
+            <td><span class="en">Heavy — organic + influencer</span><span class="zh">重度——自然 + 影响者</span></td>
+            <td><span class="en">Minimal — partner-mediated</span><span class="zh">极少——经合作方中介</span></td>
+            <td><span class="en">Minimal — insurer-mediated</span><span class="zh">极少——经保险中介</span></td>
+            <td><span class="en">None</span><span class="zh">无</span></td>
+          </tr>
+          <tr>
+            <td><span class="en">What works best</span><span class="zh">最有效之处</span></td>
+            <td><span class="en">Partnership distribution + category PR</span><span class="zh">合作分销 + 品类公关</span></td>
+            <td><span class="en">Founder flywheel + cultural moments</span><span class="zh">创始人飞轮 + 文化话题</span></td>
+            <td><span class="en">Platform integrations with lab giants</span><span class="zh">与化验巨头的平台集成</span></td>
+            <td><span class="en">Co-marketing engine + brand system</span><span class="zh">联合营销引擎 + 品牌体系</span></td>
+            <td><span class="en">IR + RFP proof-of-scale</span><span class="zh">投资者关系 + RFP 规模佐证</span></td>
+          </tr>
+          <tr>
+            <td><span class="en">Gap / doesn't work</span><span class="zh">短板 / 无效</span></td>
+            <td><span class="en">No consumer reach</span><span class="zh">缺乏消费者触达</span></td>
+            <td><span class="en">Single-personality dependence</span><span class="zh">依赖单一个人</span></td>
+            <td><span class="en">Weak standalone consumer brand</span><span class="zh">独立消费者品牌薄弱</span></td>
+            <td><span class="en">Limited consumer awareness</span><span class="zh">消费者认知有限</span></td>
+            <td><span class="en">Constrained spend; reputation risk</span><span class="zh">预算受限；声誉风险</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7. Implications -->
+  <div class="implications" id="c7">
+    <h2><span class="en">7 · Strategic Implications for Homee</span><span class="zh">7 · 对 Homee 的战略启示</span></h2>
+    <p><span class="en">Across all five competitors, the highest-leverage acquisition channel is <b>partner / payer co-marketing</b>, not paid advertising: Sprinter, Getlabs, DispatchHealth, and DocGo all source the bulk of their volume by having partners surface them to existing patient populations at near-zero acquisition cost. The clearest exception is Function Health, which proves that a <b>founder-IP + organic-social flywheel</b> can build a consumer brand without paid media — but at the cost of concentration risk on a single personality. Notably, almost no competitor relies on paid demand-gen, which suggests the category rewards trust-transfer (through partners or founders) over performance marketing. For Homee, the strategic questions are which trusted distribution partners can carry the brand, whether to build a defensible consumer brand or sit as infrastructure beneath one (the Getlabs-into-Function pattern), and how to use a disciplined, regulatorily-safe brand system (the DispatchHealth model) to scale messaging consistently.</span><span class="zh">纵观全部五家竞争对手，最高杠杆的获客渠道是<b>合作伙伴 / 支付方联合营销</b>，而非付费广告：Sprinter、Getlabs、DispatchHealth 和 DocGo 的大部分业务量，都来自让合作伙伴以接近零的获客成本向既有患者群体推介自己。最明显的例外是 Function Health，它证明了<b>创始人 IP + 自然社交飞轮</b>可以在不依赖付费媒体的情况下打造消费品牌——但代价是风险集中于单一个人形象。值得注意的是，几乎没有竞争者依赖付费需求生成，这表明该品类奖励的是（通过合作伙伴或创始人实现的）信任转移，而非效果营销。对 Homee 而言，关键的战略问题是：哪些受信赖的分销伙伴能够承载品牌；是打造一个有护城河的消费品牌，还是置于某个消费品牌之下作为基础设施（即 Getlabs 并入 Function 的模式）；以及如何运用一套有纪律、合规安全的品牌体系（DispatchHealth 模式）来一致地规模化信息传递。</span></p>
+  </div>
+
+  <footer>
+    <span class="en">US Mobile Healthcare Competitive Landscape · Prepared for Homee · June 2026</span>
+    <span class="zh">美国移动医疗竞争格局 · 为 Homee 准备 · 2026 年 6 月</span>
+  </footer>
+
+</div>
+
+<script>
+  function setLang(lang){
+    document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    try{ localStorage.setItem('reportLang', lang); }catch(e){}
+  }
+  (function(){
+    var saved = 'en';
+    try{ saved = localStorage.getItem('reportLang') || 'en'; }catch(e){}
+    setLang(saved);
+  })();
+</script>
+</body>
+</html>
